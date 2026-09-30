@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1010" height="476" viewBox="0 0 1010 476" font-family="Helvetica Neue, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a8a8a"/>
+    </marker>
+    <style>
+      .zone   { fill: none; stroke: #d4d4d4; stroke-width: 1.2; stroke-dasharray: 5 4; }
+      .zlabel { fill: #2e2e2e; font-size: 15px; font-weight: 600; }
+      .sublabel { fill: #2e2e2e; font-size: 14px; font-weight: 600; }
+      .zsub   { fill: #7a7a7a; font-size: 12.5px; }
+      .svc    { fill: #e0f4ec; stroke: #a9dac4; stroke-width: 1.2; }
+      .stitle { fill: #1d4d3c; font-size: 15px; font-weight: 600; text-anchor: middle; }
+      .ssub   { fill: #3f7a63; font-size: 12.5px; text-anchor: middle; }
+      .you    { fill: #eeebe5; stroke: #cfcac0; stroke-width: 1.2; }
+      .ytitle { fill: #2e2e2e; font-size: 15px; font-weight: 600; text-anchor: middle; }
+      .ysub   { fill: #6b6b6b; font-size: 12.5px; text-anchor: middle; }
+      .line   { fill: none; stroke: #8a8a8a; stroke-width: 1.5; }
+      .out    { fill: none; stroke: #8a8a8a; stroke-width: 1.5; stroke-dasharray: 6 4; }
+      .attach { fill: none; stroke: #8a8a8a; stroke-width: 1.5; stroke-dasharray: 2 4; }
+      .alabel { fill: #6b6b6b; font-size: 12px; }
+      .muted  { fill: #9a9a9a; font-size: 12.5px; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="1010" height="476" fill="#ffffff"/>
+
+  <!-- You -->
+  <rect class="you" x="16" y="188" width="130" height="60" rx="8"/>
+  <text class="ytitle" x="81" y="214">You</text>
+  <text class="ysub" x="81" y="232">terraform · AWS CLI</text>
+
+  <!-- AWS Cloud and Region -->
+  <rect class="zone" x="230" y="16" width="764" height="444" rx="12"/>
+  <text class="zlabel" x="246" y="40">AWS Cloud</text>
+
+  <rect class="zone" x="246" y="52" width="732" height="328" rx="10"/>
+  <text class="zlabel" x="262" y="76">Region: us-east-1</text>
+
+  <!-- Regional services -->
+  <rect class="svc" x="266" y="112" width="190" height="56" rx="8"/>
+  <text class="stitle" x="361" y="136">Systems Manager</text>
+  <text class="ssub" x="361" y="155">Session Manager</text>
+
+  <rect class="svc" x="266" y="190" width="190" height="56" rx="8"/>
+  <text class="stitle" x="361" y="214">S3 state bucket</text>
+  <text class="ssub" x="361" y="233">versioned · encrypted · locked</text>
+
+  <!-- VPC -->
+  <rect class="zone" x="500" y="86" width="462" height="282" rx="10"/>
+  <text class="zlabel" x="516" y="108">VPC 10.0.0.0/16</text>
+  <text class="zsub" x="640" y="108">one per workspace: staging, production</text>
+
+  <rect class="svc" x="580" y="120" width="160" height="40" rx="8"/>
+  <text class="stitle" x="660" y="145">Internet gateway</text>
+
+  <!-- AZ A -->
+  <rect class="zone" x="516" y="176" width="250" height="180" rx="8"/>
+  <text class="zlabel" x="530" y="198">Availability zone A</text>
+  <rect class="zone" x="528" y="208" width="226" height="136" rx="8"/>
+  <text class="sublabel" x="540" y="227">Public subnet</text>
+  <text class="zsub" x="540" y="243">10.0.0.0/24</text>
+
+  <rect class="svc" x="540" y="262" width="190" height="72" rx="8"/>
+  <text class="stitle" x="635" y="283">EC2 instance</text>
+  <text class="ssub" x="635" y="301">Amazon Linux 2023</text>
+  <text class="ssub" x="635" y="318">public IP · no inbound rules</text>
+
+  <!-- AZ B -->
+  <rect class="zone" x="782" y="176" width="168" height="180" rx="8"/>
+  <text class="zlabel" x="796" y="198">Availability zone B</text>
+  <rect class="zone" x="794" y="208" width="144" height="136" rx="8"/>
+  <text class="sublabel" x="806" y="227">Public subnet</text>
+  <text class="zsub" x="806" y="243">10.0.1.0/24</text>
+  <text class="muted" x="866" y="284">unused, ready for</text>
+  <text class="muted" x="866" y="301">a second instance</text>
+
+  <!-- IAM: global, so outside the region -->
+  <rect class="svc" x="525" y="396" width="220" height="50" rx="8"/>
+  <text class="stitle" x="635" y="417">IAM role + instance profile</text>
+  <text class="ssub" x="635" y="435">global · attached to EC2</text>
+
+  <!-- You -> AWS -->
+  <path class="line" d="M81,188 V140 H264" marker-end="url(#arrow)"/>
+  <text class="alabel" x="90" y="132">aws ssm start-session</text>
+  <path class="line" d="M146,218 H264" marker-end="url(#arrow)"/>
+  <text class="alabel" x="156" y="210">plan / apply</text>
+
+  <!-- Agent's outbound channel: EC2 -> IGW -> Systems Manager -->
+  <path class="out" d="M716,262 V162" marker-end="url(#arrow)"/>
+  <text class="alabel" x="709" y="234" text-anchor="end">outbound</text>
+  <text class="alabel" x="709" y="248" text-anchor="end">HTTPS only</text>
+  <path class="out" d="M580,140 H458" marker-end="url(#arrow)"/>
+
+  <!-- IAM attached to EC2 -->
+  <path class="attach" d="M635,396 V336" marker-end="url(#arrow)"/>
+</svg>

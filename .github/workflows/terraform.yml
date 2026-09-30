@@ -1,0 +1,42 @@
+name: Terraform checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Format
+        run: terraform fmt -check -recursive
+
+      # No AWS credentials in CI: skip the S3 backend, providers and modules still download
+      - name: Init
+        run: terraform init -backend=false -input=false
+
+      # The compute module rejects the "default" workspace on purpose, so validate as staging
+      - name: Validate
+        env:
+          TF_WORKSPACE: staging
+        run: terraform validate
+
+      - uses: terraform-linters/setup-tflint@v4
+
+      # TFLint evaluates the code too, so it also needs a real workspace
+      # (the per-workspace instance size map has no "default" key)
+      - name: TFLint
+        env:
+          TF_WORKSPACE: staging
+          GITHUB_TOKEN: ${{ github.token }} # avoids GitHub API rate limits when downloading the AWS plugin
+        run: |
+          tflint --init
+          tflint --recursive --format compact

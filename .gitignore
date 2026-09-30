@@ -1,0 +1,28 @@
+# Local provider and module downloads
+.terraform/
+
+# State files (state lives in S3, never commit a local copy)
+*.tfstate
+*.tfstate.*
+
+# Variable files may hold secrets
+*.tfvars
+*.tfvars.json
+
+# Crash logs and saved plans
+crash.log
+crash.*.log
+*.tfplan
+
+# Local override files
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Python virtual environment and bytecode
+.venv/
+__pycache__/
+*.pyc
+
+# .terraform.lock.hcl is intentionally NOT ignored, commit it
