@@ -1,6 +1,6 @@
 # Terraform AWS Environment
 
-[![Terraform checks WIP](https://github.com/liliyapetillo/terraform-aws-environment/actions/workflows/terraform.yml/badge.svg)](https://github.com/liliyapetillo/terraform-aws-environment/actions/workflows/terraform.yml)
+[![Terraform checks](https://github.com/liliyapetillo/terraform-aws-environment/actions/workflows/terraform.yml/badge.svg)](https://github.com/liliyapetillo/terraform-aws-environment/actions/workflows/terraform.yml)
 
 A small AWS environment built entirely in Terraform: a VPC, a security
 group with no inbound rules, and one EC2 instance reachable only through
